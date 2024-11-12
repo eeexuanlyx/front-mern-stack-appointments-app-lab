@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import Appointment from "./Appointment";
 import useFetch from "../hooks/useFetch.jsx";
+import UserContext from "../context/user.jsx";
 
 const AppointmentDisplay = () => {
   const [appointments, setAppointments] = useState([]);
 
   const fetchData = useFetch();
-
+  const userCtx = useContext(UserContext);
   const titleRef = useRef();
   const typeRef = useRef();
   const purposeRef = useRef();
@@ -30,7 +31,12 @@ const AppointmentDisplay = () => {
   };
 
   const getAppointments = async () => {
-    const res = await fetchData("/api/appointments", "GET");
+    const res = await fetchData(
+      "/api/appointments",
+      "GET",
+      undefined,
+      userCtx.accessToken
+    );
 
     if (res.ok) {
       setAppointments(res.data);
@@ -41,17 +47,22 @@ const AppointmentDisplay = () => {
   };
 
   const addAppointment = async () => {
-    const res = await fetchData("/api/appointments", "PUT", {
-      title: titleRef.current.value,
-      type: typeRef.current.value,
-      purpose: purposeRef.current.value,
-      attendee: attendeeRef.current.value,
-      company: companyRef.current.value,
-      address: addressRef.current.value,
-      date: dateRef.current.value,
-      time: timeRef.current.value,
-      comment: commentRef.current.value,
-    });
+    const res = await fetchData(
+      "/api/appointments",
+      "PUT",
+      {
+        title: titleRef.current.value,
+        type: typeRef.current.value,
+        purpose: purposeRef.current.value,
+        attendee: attendeeRef.current.value,
+        company: companyRef.current.value,
+        address: addressRef.current.value,
+        date: dateRef.current.value,
+        time: timeRef.current.value,
+        comment: commentRef.current.value,
+      },
+      userCtx.accessToken
+    );
 
     if (res.ok) {
       getAppointments();
@@ -65,7 +76,12 @@ const AppointmentDisplay = () => {
 
   const deleteAppointment = async (id) => {
     // follow useFetch endpoint, method, body, token
-    const res = await fetchData("/api/appointments/" + id, "DELETE");
+    const res = await fetchData(
+      "/api/appointments/" + id,
+      "DELETE",
+      undefined,
+      userCtx.accessToken
+    );
 
     if (res.ok) {
       getAppointments();

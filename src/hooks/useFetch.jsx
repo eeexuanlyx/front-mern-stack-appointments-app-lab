@@ -1,10 +1,11 @@
 const useFetch = () => {
-  const fetchData = async (endpoint, method, body) => {
+  const fetchData = async (endpoint, method, body, token) => {
     //sending token to back end to use it
     const res = await fetch(import.meta.env.VITE_SERVER + endpoint, {
       method,
       headers: {
         "Content-Type": "application/json",
+        authorization: "Bearer " + token,
       },
       body: JSON.stringify(body),
     });

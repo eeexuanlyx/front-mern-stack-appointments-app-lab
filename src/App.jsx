@@ -1,9 +1,17 @@
+import React, { useState } from "react";
 import AppointmentDisplay from "./components/AppointmentDisplay";
+import UserContext from "./context/user.jsx";
+import Login from "./components/Login.jsx";
 
 function App() {
+  const [accessToken, setAccessToken] = useState("");
+
   return (
     <>
-      <AppointmentDisplay />
+      <UserContext.Provider value={{ accessToken, setAccessToken }}>
+        {accessToken.length > 0 && <AppointmentDisplay />}
+        {accessToken.length === 0 && <Login />}
+      </UserContext.Provider>
     </>
   );
 }

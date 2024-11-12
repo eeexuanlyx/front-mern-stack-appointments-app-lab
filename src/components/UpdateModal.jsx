@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import ReactDOM from "react-dom";
 import styles from "./Modal.module.css";
 import useFetch from "../hooks/useFetch";
+import UserContext from "../context/user.jsx";
 
 const OverLay = (props) => {
+  const userCtx = useContext(UserContext);
   const fetchData = useFetch();
   const titleRef = useRef();
   const typeRef = useRef();
@@ -16,17 +18,22 @@ const OverLay = (props) => {
   const commentRef = useRef();
 
   const updateAppointment = async (id) => {
-    const res = await fetchData("/api/appointments/" + id, "PATCH", {
-      title: titleRef.current.value,
-      type: typeRef.current.value,
-      purpose: purposeRef.current.value,
-      attendee: attendeeRef.current.value,
-      company: companyRef.current.value,
-      address: addressRef.current.value,
-      date: dateRef.current.value,
-      time: timeRef.current.value,
-      comment: commentRef.current.value,
-    });
+    const res = await fetchData(
+      "/api/appointments/" + id,
+      "PATCH",
+      {
+        title: titleRef.current.value,
+        type: typeRef.current.value,
+        purpose: purposeRef.current.value,
+        attendee: attendeeRef.current.value,
+        company: companyRef.current.value,
+        address: addressRef.current.value,
+        date: dateRef.current.value,
+        time: timeRef.current.value,
+        comment: commentRef.current.value,
+      },
+      userCtx.accessToken
+    );
 
     if (res.ok) {
       props.getAppointments();
