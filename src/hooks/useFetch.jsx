@@ -1,34 +1,36 @@
 const useFetch = () => {
-  const fetchData = async (endpoint, method, body, token) => {
-    //sending token to back end to use it
-    const res = await fetch(import.meta.env.VITE_SERVER + endpoint, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(body),
-    });
-    const data = await res.json();
+  try {
+    const fetchData = async (endpoint, method, body, token) => {
+      const res = await fetch(import.meta.env.VITE_SERVER + endpoint, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
 
-    if (!res.ok) {
-      // catch errors from validators
-      if (data?.errors) {
-        throw new Error(data.errors[0].msg);
+      if (!res.ok) {
+        if (Array.isArray(data.msg)) {
+          const returnValue = data.msg.map((item, idx) => (
+            <p key={idx}>{item.msg}</p>
+          ));
+
+          return { ok: false, msg: returnValue };
+        } else {
+          return { ok: false, msg: data.msg };
+        }
+      } else {
+        return { ok: true, data };
       }
+    };
 
-      // catch errors from controllers
-      if (data.status === "error") {
-        throw new Error(data.msg);
-      }
-
-      throw new Error("an error has occurred, please try again later");
-    }
-
-    return { ok: true, data };
-  };
-
-  return fetchData;
+    return fetchData;
+  } catch (err) {
+    console.error(err.message);
+    return { ok: false, msg: "data error" };
+  }
 };
 
 export default useFetch;

@@ -1,23 +1,26 @@
-import React, { useContext, useState } from "react";
-import useFetch from "../hooks/useFetch.jsx";
-import UserContext from "../context/user";
+import React, { useEffect, useState } from "react";
+import useFetch from "../hooks/useFetch";
 
-const Login = (props) => {
-  const userCtx = useContext(UserContext);
+const Registration = (props) => {
+  const fetchData = useFetch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const fetchData = useFetch();
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleLogin = async () => {
+  const registerUser = async () => {
     setIsError(false);
     setError(null);
-
-    const res = await fetchData("/auth/login", "POST", { email, password });
+    const res = await fetchData("/auth/register", "PUT", {
+      email,
+      password,
+    });
 
     if (res.ok) {
-      userCtx.setAccessToken(res.data.access);
+      setEmail("");
+      setPassword("");
+      props.setShowLogin(true);
+      props.setSignedUp(true);
     } else {
       console.error(res.msg);
       setError(res.msg);
@@ -27,64 +30,58 @@ const Login = (props) => {
 
   return (
     <>
+      <br></br>
       {isError && (
         <div className="text-center">
           <p>{error}</p>
         </div>
       )}
       <br />
-      {props.signedUp && (
-        <div className="text-center">
-          <p>Signed Up Successful, please log in</p>
-        </div>
-      )}
       <div className="row">
         <div className="col-md-4"></div>
         <input
-          type="text"
           className="col-md-4"
           placeholder="email"
+          type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        />
+        ></input>
         <div className="col-md-4"></div>
       </div>
 
       <div className="row">
         <div className="col-md-4"></div>
         <input
-          type="password"
           className="col-md-4"
           placeholder="password"
+          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        />
+        ></input>
         <div className="col-md-4"></div>
       </div>
 
       <div className="row">
         <div className="col-md-4"></div>
-        <button className="col-md-4" onClick={handleLogin} type="submit">
-          login
+        <button className="col-md-4" type="submit" onClick={registerUser}>
+          register
         </button>
         <div className="col-md-4"></div>
       </div>
 
       <div className="row">
         <div className="col-md-4"></div>
-
         <button
           className="col-md-4"
-          onClick={() => props.setShowLogin(false)}
+          onClick={() => props.setShowLogin(true)}
           type="submit"
         >
-          No account? Sign Up here
+          Already signed up? Login Here
         </button>
-
         <div className="col-md-4"></div>
       </div>
     </>
   );
 };
 
-export default Login;
+export default Registration;
