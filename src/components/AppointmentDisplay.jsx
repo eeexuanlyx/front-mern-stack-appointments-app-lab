@@ -31,7 +31,8 @@ const AppointmentDisplay = (props) => {
   };
 
   const handleLogout = () => {
-    props.setAccessToken("");
+    userCtx.setAccessToken("");
+    userCtx.setRefreshToken("");
   };
 
   const getAppointments = async () => {

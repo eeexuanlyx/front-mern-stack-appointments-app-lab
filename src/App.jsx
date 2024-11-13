@@ -6,15 +6,16 @@ import Registration from "./components/Registeration.jsx";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
   const [showLogin, setShowLogin] = useState(true);
   const [signedUp, setSignedUp] = useState(false);
 
   return (
     <>
-      <UserContext.Provider value={{ accessToken, setAccessToken }}>
-        {accessToken.length > 0 && (
-          <AppointmentDisplay setAccessToken={setAccessToken} />
-        )}
+      <UserContext.Provider
+        value={{ accessToken, setAccessToken, refreshToken, setRefreshToken }}
+      >
+        {accessToken.length > 0 && <AppointmentDisplay />}
         {accessToken.length === 0 && showLogin && (
           <Login signedUp={signedUp} setShowLogin={setShowLogin} />
         )}

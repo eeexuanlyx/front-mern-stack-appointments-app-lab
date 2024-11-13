@@ -18,6 +18,7 @@ const Login = (props) => {
 
     if (res.ok) {
       userCtx.setAccessToken(res.data.access);
+      userCtx.setRefreshToken(res.data.refresh);
     } else {
       console.error(res.msg);
       setError(res.msg);
