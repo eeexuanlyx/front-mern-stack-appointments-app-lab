@@ -25,7 +25,7 @@ const Appointment = (props) => {
         />
       )}
 
-      <div className="flex-row">
+      <div className="flex-row mb-2 ">
         <div className="card shadow-sm mt-2">
           <div className="card-body mt-2 mb-2 px-4">
             <h5 className="card-title text-primary">{props.title}</h5>

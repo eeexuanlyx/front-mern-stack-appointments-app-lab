@@ -37,10 +37,13 @@ const Registration = (props) => {
         </div>
       )}
       <br />
-      <div className="row">
+      <div className="col-md-12 text-center mb-4 ">
+        <h1 className="h1">Appointments Tracker</h1>
+      </div>
+      <div className="row mt-5 ">
         <div className="col-md-4"></div>
         <input
-          className="col-md-4"
+          className="form-control-lg col-md-4 mb-1"
           placeholder="email"
           type="text"
           value={email}
@@ -52,7 +55,7 @@ const Registration = (props) => {
       <div className="row">
         <div className="col-md-4"></div>
         <input
-          className="col-md-4"
+          className="form-control-lg col-md-4 mb-3"
           placeholder="password"
           type="password"
           value={password}
@@ -63,7 +66,11 @@ const Registration = (props) => {
 
       <div className="row">
         <div className="col-md-4"></div>
-        <button className="col-md-4" type="submit" onClick={registerUser}>
+        <button
+          className="btn btn-outline-success col-md-4"
+          type="submit"
+          onClick={registerUser}
+        >
           register
         </button>
         <div className="col-md-4"></div>
@@ -72,7 +79,7 @@ const Registration = (props) => {
       <div className="row">
         <div className="col-md-4"></div>
         <button
-          className="col-md-4"
+          className="btn btn-link"
           onClick={() => props.setShowLogin(true)}
           type="submit"
         >

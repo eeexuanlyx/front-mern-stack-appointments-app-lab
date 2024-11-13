@@ -28,6 +28,7 @@ const Login = (props) => {
 
   return (
     <>
+      <br></br>
       {isError && (
         <div className="text-center">
           <p>{error}</p>
@@ -39,11 +40,14 @@ const Login = (props) => {
           <p>Signed Up Successful, please log in</p>
         </div>
       )}
-      <div className="row">
+      <div className="col-md-12 text-center mb-4 ">
+        <h1 className="h1">Appointments Tracker</h1>
+      </div>
+      <div className="row mt-5">
         <div className="col-md-4"></div>
         <input
           type="text"
-          className="col-md-4"
+          className="form-control-lg col-md-4 mb-1"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -55,7 +59,7 @@ const Login = (props) => {
         <div className="col-md-4"></div>
         <input
           type="password"
-          className="col-md-4"
+          className="form-control-lg col-md-4 mb-3"
           placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -65,7 +69,11 @@ const Login = (props) => {
 
       <div className="row">
         <div className="col-md-4"></div>
-        <button className="col-md-4" onClick={handleLogin} type="submit">
+        <button
+          className="btn btn-outline-primary col-md-4"
+          onClick={handleLogin}
+          type="submit"
+        >
           login
         </button>
         <div className="col-md-4"></div>
@@ -75,7 +83,7 @@ const Login = (props) => {
         <div className="col-md-4"></div>
 
         <button
-          className="col-md-4"
+          className="btn btn-link text-success"
           onClick={() => props.setShowLogin(false)}
           type="submit"
         >

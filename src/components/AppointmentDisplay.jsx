@@ -3,7 +3,7 @@ import Appointment from "./Appointment";
 import useFetch from "../hooks/useFetch.jsx";
 import UserContext from "../context/user.jsx";
 
-const AppointmentDisplay = (props) => {
+const AppointmentDisplay = () => {
   const [appointments, setAppointments] = useState([]);
 
   const fetchData = useFetch();
@@ -103,18 +103,23 @@ const AppointmentDisplay = (props) => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-4"></div>
-        <button className="col-md-4" onClick={handleLogout} type="submit">
-          logout
-        </button>
-        <div className="col-md-4"></div>
-      </div>
-      <div className="row">
-        <div className="col-md-12 text-center mb-4 ">
+        <div className="col-md-12 text-center mb-4 mt-2 ">
           <h1 className="h1">Appointments Tracker</h1>
         </div>
       </div>
-      <h3>New Appointment</h3>
+      <div className="row mt-2">
+        <div className="col-md-9">
+          <h3>New Appointment</h3>
+        </div>
+        <button
+          className="btn btn-outline-danger col-md-3 "
+          onClick={handleLogout}
+          type="submit"
+        >
+          logout
+        </button>
+      </div>
+
       <form className="row g-3 border rounded shadow-none p-3 mb-5 bg-light mt-4 ">
         <div className="col-12">
           <label htmlFor="title" className="form-label">
