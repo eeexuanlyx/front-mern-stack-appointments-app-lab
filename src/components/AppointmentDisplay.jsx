@@ -3,7 +3,7 @@ import Appointment from "./Appointment";
 import useFetch from "../hooks/useFetch.jsx";
 import UserContext from "../context/user.jsx";
 
-const AppointmentDisplay = () => {
+const AppointmentDisplay = (props) => {
   const [appointments, setAppointments] = useState([]);
 
   const fetchData = useFetch();
@@ -28,6 +28,10 @@ const AppointmentDisplay = () => {
     dateRef.current.value = "";
     timeRef.current.value = "";
     commentRef.current.value = "";
+  };
+
+  const handleLogout = () => {
+    props.setAccessToken("");
   };
 
   const getAppointments = async () => {
@@ -97,6 +101,13 @@ const AppointmentDisplay = () => {
 
   return (
     <div className="container">
+      <div className="row">
+        <div className="col-md-4"></div>
+        <button className="col-md-4" onClick={handleLogout} type="submit">
+          logout
+        </button>
+        <div className="col-md-4"></div>
+      </div>
       <div className="row">
         <div className="col-md-12 text-center mb-4 ">
           <h1 className="h1">Appointments Tracker</h1>

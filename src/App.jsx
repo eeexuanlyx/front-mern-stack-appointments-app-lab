@@ -12,7 +12,9 @@ function App() {
   return (
     <>
       <UserContext.Provider value={{ accessToken, setAccessToken }}>
-        {accessToken.length > 0 && <AppointmentDisplay />}
+        {accessToken.length > 0 && (
+          <AppointmentDisplay setAccessToken={setAccessToken} />
+        )}
         {accessToken.length === 0 && showLogin && (
           <Login signedUp={signedUp} setShowLogin={setShowLogin} />
         )}
